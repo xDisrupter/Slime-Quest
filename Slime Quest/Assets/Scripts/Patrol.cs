@@ -31,7 +31,7 @@ private void Update()
 
 private void OnTriggerEnter(Collider collider)
 {
-   // if(collider.gameObject.CompareTag("turn")){
+    if(collider.gameObject.CompareTag("Turn")){
         if(movingRight ==true)
         {
             movingRight = false;
@@ -41,7 +41,7 @@ private void OnTriggerEnter(Collider collider)
             movingRight = true;
            // Debug.Log("Moving Left");
         }   
-    //}
+    }
 }
 
 }
