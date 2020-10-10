@@ -31,6 +31,7 @@ private void Update()
 
 private void OnTriggerEnter(Collider collider)
 {
+        Debug.Log("Enter");
     if(collider.gameObject.CompareTag("Turn")){
         if(movingRight ==true)
         {
@@ -43,5 +44,10 @@ private void OnTriggerEnter(Collider collider)
         }   
     }
 }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+    }
 
 }

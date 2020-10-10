@@ -7,6 +7,7 @@ public class Platform : MonoBehaviour
 
     public Transform pos1, pos2;
     public float platformSpeed;
+    public GameObject player;
 
     Vector3 nextPos;
 
@@ -25,5 +26,27 @@ public class Platform : MonoBehaviour
 
         transform.position = Vector2.MoveTowards(transform.position, nextPos, platformSpeed * Time.deltaTime);
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(pos1.position, pos2.position);   
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            player.transform.parent = transform;
+            //Debug.Log("PlE");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.transform.parent = null;
+        }
     }
 }
