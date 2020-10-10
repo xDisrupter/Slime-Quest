@@ -32,6 +32,12 @@ public class Player : MonoBehaviour
             _health -= (_damageRate*Time.deltaTime);
             animator.SetBool("takingDMG",true);
         }
+
+        if (other.gameObject.CompareTag("Health Pickup"))
+        {
+            _health += 1;
+            Destroy(other.gameObject);
+        }
  
     }
 
