@@ -7,13 +7,14 @@ public class PlayerController : MonoBehaviour
   //  private Rigidbody rb;
     public float speed;
     [SerializeField] private float _jumpForce = 2f;
-    private float moveInput;
     public CharacterController controller;
     public float rotationSpeed;
     public GameObject player;
 
     private Vector3 moveDirection;
     public float gravityScale;
+    private bool _groundedPlayer;
+    private Vector3 _playerVelocity;
 
     Animator animator;
 
@@ -38,60 +39,32 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        moveDirection = new Vector3(moveInput * speed, moveDirection.y, 0f);
+       
+        // moveDirection = new Vector3(moveInput * speed, moveDirection.y, 0f);
 
-        if (moveInput == 1 || moveInput == -1)
+        _groundedPlayer = controller.isGrounded;
+        if (_groundedPlayer && _playerVelocity.y < 0)
         {
-            Debug.Log("is walking");
-            isWalking = true;
-            if (moveInput == 1)
-            {
-                //rotate the player 150
-                //  moveDirection = transform.TransformDirection(moveInput * speed, 150, 0);
-                // moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale);
-                //transform.Rotate(0, 1 * rotationSpeed, 0);
-                // var forward = transform.TransformDirection(Vector3.forward);
-                //controller.Move(moveDirection * Time.deltaTime);
-                //float curSpeed = speed * Input.GetAxis("Vertical");
-                //controller.SimpleMove(forward * curSpeed);
-                //  transform.Rotate(0,1 * rotationSpeed,0);
-                // transform.rotation = Quaternion.LookRotation(new Vector3 (0,0,210));
-              //  Debug.Log("Rotate right");
-                //transform.Rotate(Vector3.up * rotationSpeed);
-                
-            }
-            if (moveInput == -1)
-            {
-                //rotate the player -150
-                // moveDirection = transform.TransformDirection(moveInput * speed, -150, 0);
-                // transform.Rotate();
-                // transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, -210));
-                //transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime); 
-                
-            } 
+            _playerVelocity.y = 0f;
+        }
+
+        // moveInput = Input.GetAxisRaw("Horizontal");
+        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        controller.Move(moveDirection * Time.deltaTime * speed);
+        if (moveDirection != Vector3.zero)
+        {
+            gameObject.transform.forward = moveDirection;
             animator.SetBool("isWalking", true);
-        }
-        else {
-           // Debug.Log("Stoped walking");
-            isWalking = true;
-            animator.SetBool("isWalking",false);
-        }
+        }else animator.SetBool("isWalking", false);
 
-        if (controller.isGrounded)
+        if (Input.GetButtonDown("Jump") && _groundedPlayer)
         {
-            if (Input.GetAxis("Jump") == 1)
-            {
-                moveDirection.y = _jumpForce;
-                animator.SetBool("jumping", true);
-            }
-        }
-        else { animator.SetBool("jumping",false); }
+            _playerVelocity.y += Mathf.Sqrt(_jumpForce * -3.0f * gravityScale);
+            animator.SetBool("jumping", true);
+        }else animator.SetBool("jumping", false);
 
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale);
-        //transform.rotation = Quaternion.LookRotation(moveDirection);
-        controller.Move(moveDirection * Time.deltaTime);
-
+        _playerVelocity.y += gravityScale * Time.deltaTime;
+        controller.Move(_playerVelocity * Time.deltaTime);
     }
 
    /* private void OnTriggerEnter(Collider other)

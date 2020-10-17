@@ -1074,7 +1074,7 @@ PrefabInstance:
     - target: {fileID: 1632201590355938716, guid: ddf3e79e414cc3f47baf2a97b4b383bc,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.76604444
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1632201590355938716, guid: ddf3e79e414cc3f47baf2a97b4b383bc,
         type: 3}
@@ -1084,7 +1084,7 @@ PrefabInstance:
     - target: {fileID: 1632201590355938716, guid: ddf3e79e414cc3f47baf2a97b4b383bc,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.64278764
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1632201590355938716, guid: ddf3e79e414cc3f47baf2a97b4b383bc,
         type: 3}
@@ -1099,7 +1099,7 @@ PrefabInstance:
     - target: {fileID: 1632201590355938716, guid: ddf3e79e414cc3f47baf2a97b4b383bc,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 100
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1632201590355938716, guid: ddf3e79e414cc3f47baf2a97b4b383bc,
         type: 3}
@@ -1719,12 +1719,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8544562909c343543afaf371c929e713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  _jumpForce: 25
+  speed: 5
+  _jumpForce: 5
   controller: {fileID: 890083251}
   rotationSpeed: 3
   player: {fileID: 890083249}
-  gravityScale: 0.1
+  gravityScale: -9.81
   isWalking: 0
   idle: 0
   jumping: 0
