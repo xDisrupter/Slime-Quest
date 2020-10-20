@@ -31,10 +31,12 @@ private void Update()
 
 private void OnTriggerEnter(Collider collider)
 {
-        Debug.Log("Enter");
+        
     if(collider.gameObject.CompareTag("Turn")){
+//Debug.Log("Enter");
         if(movingRight ==true)
         {
+               // Debug.Log("left");
             movingRight = false;
            // Debug.Log("moveing Right");
         }

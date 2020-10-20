@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float _health;
     public float _maxHealth;
     public float _damageRate;
+    private float inputVertical;
     Animator animator;
 
     // Start is called before the first frame update
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        inputVertical = Input.GetAxis("Vertical");
 
     }
 
@@ -38,7 +39,37 @@ public class Player : MonoBehaviour
             _health += 1;
             Destroy(other.gameObject);
         }
- 
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+             if (other.gameObject.CompareTag("SpikeTrap"))
+        {
+            SpikeTrapDemo spiketrap = other.gameObject.GetComponent<SpikeTrapDemo>();
+            if (spiketrap.takeDmg)
+            {
+                _health -= (_damageRate * Time.deltaTime);
+            }          
+        }
+
+        if (other.CompareTag("TwoWayPlatform"))
+        {
+            // Debug.Log("Working");
+            
+          BoxCollider bx=  other.gameObject.GetComponent<BoxCollider>();
+            if (transform.position.y > other.gameObject.transform.position.y)
+            { 
+            bx.isTrigger = false;
+                if (inputVertical < 0)
+                {
+                    bx.isTrigger = true;
+                }
+            }
+
+            
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -47,5 +78,16 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("takingDMG", false);
         }
+
+        if (other.CompareTag("TwoWayPlatform"))
+        {
+            // Debug.Log("Working");
+            
+          BoxCollider bx=  other.gameObject.GetComponent<BoxCollider>();
+            bx.isTrigger=true;
+
+            
+        }
+
     }
 }
